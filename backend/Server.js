@@ -25,6 +25,18 @@ app.post('/',async(req,res)=>{
     const result=await client.db('todo').collection('todolist').insertOne({'name':req.body.name,'desc':req.body.desc})
     console.log(result)
 })
+app.get('/',async(req,res)=>{
+    const result=await client.db('todo').collection('todolist').find().toArray()
+    console.log(result)
+    if(result.length>0){
+        res.json(result)
+    }
+    else{
+        console.log('failed');
+        
+    }
+})
+    
 
 
 
