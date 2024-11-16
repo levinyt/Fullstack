@@ -3,6 +3,9 @@ const app=express()
 
 const cors=require('cors')
 app.use(cors())
+const {MongoClient}=require('mongodb')
+const client=new MongoClient('mongodb://localhost:27017')
+
 
 const bodyparser=require('body-parser')
 app.use(bodyparser.json())
@@ -15,10 +18,14 @@ app.listen(5000,()=>{
     
 })
 
-app.post('/',(req,res)=>{
+app.post('/',async(req,res)=>{
     console.log(req.body.name)
     console.log(req.body.desc)
+
+    const result=await client.db('todo').collection('todolist').insertOne({'name':req.body.name,'desc':req.body.desc})
+    console.log(result)
 })
+
 
 
 
